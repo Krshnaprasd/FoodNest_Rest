@@ -13,7 +13,7 @@ app.listen(PORT,()=>{console.log("server is running");})
 
 mongoose.connect(MONGODB_URL)
 .then(()=>{
-    console.log("Connection successful"  + MONGODB_URL);
+    console.log("Connection successful "  + MONGODB_URL);
 })
 .catch((err)=>{
 console.error("error in connecting",err.message);
@@ -30,6 +30,10 @@ app.use(cors(
 
 const UserRouter = require('./Controller/SignupController')
 const LoginRouter = require('./Controller/LoginController')
+const ProductRouter = require('./Controller/ProductController')
+const CategoryRouter = require('./Controller/CategoryController')
 
 app.use('/Signup',UserRouter)
 app.use('/login',LoginRouter)
+app.use('/product',ProductRouter)
+app.use('/category',CategoryRouter)
