@@ -14,7 +14,12 @@ router.post('/check', async (req, res) => {
 
     // Directly compare the password (no bcrypt)
     if (req.body.password === user.password) {
-      res.status(200).json({ message: 'Login successful' });
+      res.status(200).json({
+        _id: user._id,
+        username: user.username,
+        message: 'Login successful'
+      });
+   
     } else {
       res.status(400).json({ message: 'Invalid username or password' });
     }

@@ -32,8 +32,11 @@ const UserRouter = require('./Controller/SignupController')
 const LoginRouter = require('./Controller/LoginController')
 const ProductRouter = require('./Controller/ProductController')
 const CategoryRouter = require('./Controller/CategoryController')
+const CartRouter = require('./Controller/CartController')
+
 
 app.use('/Signup',UserRouter)
 app.use('/login',LoginRouter)
 app.use('/product',ProductRouter)
 app.use('/category',CategoryRouter)
+app.use('/cart',CartRouter)
