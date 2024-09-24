@@ -42,14 +42,27 @@ router.post('/add', async (req, res) => {
   });
   
 
+// router.get('/:userId', async (req, res) => {
+//     try {
+//       const cart = await Cart.findOne({ userId: req.params.userId }).populate('items.productId');
+//       if (!cart) {
+//         return res.status(404).json({ message: 'Cart not found' });
+//       }
+//       return res.status(200).json(cart);
+//     } catch (error) {
+//       return res.status(500).json({ error: 'Something went wrong' });
+//     }
+//   });
+
 router.get('/:userId', async (req, res) => {
     try {
-      const cart = await Cart.findOne({ userId: req.params.userId }).populate('items.productId');
+      const cart = await Cart.findOne({ userId: req.params.userId });
       if (!cart) {
         return res.status(404).json({ message: 'Cart not found' });
       }
       return res.status(200).json(cart);
     } catch (error) {
+      console.error('Error in /cart/:userId:', error);
       return res.status(500).json({ error: 'Something went wrong' });
     }
   });
