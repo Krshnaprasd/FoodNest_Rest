@@ -43,19 +43,6 @@ router.post('/add', async (req, res) => {
     }
 });
 
-
-// router.get('/:userId', async (req, res) => {
-//     try {
-//       const cart = await Cart.findOne({ userId: req.params.userId }).populate('items.productId');
-//       if (!cart) {
-//         return res.status(404).json({ message: 'Cart not found' });
-//       }
-//       return res.status(200).json(cart);
-//     } catch (error) {
-//       return res.status(500).json({ error: 'Something went wrong' });
-//     }
-//   });
-
 router.get('/:userId', async (req, res) => {
     try {
       const cart = await Cart.findOne({ userId: req.params.userId });
@@ -92,6 +79,32 @@ router.get('/:userId', async (req, res) => {
       return res.status(404).json({ message: 'Item not found in cart' });
     } catch (error) {
       console.error('Error in /cart/update:', error.message);
+      return res.status(500).json({ message: 'Something went wrong' });
+    }
+  });
+  
+  router.delete('/:userId/remove', async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const { productId } = req.body;
+  
+      if (!userId || !productId) {
+        return res.status(400).json({ message: 'Missing required fields' });
+      }
+  
+      const userObjectId = new mongoose.Types.ObjectId(userId);
+      let cart = await Cart.findOne({ userId: userObjectId });
+  
+      if (cart) {
+        cart.items = cart.items.filter(item => item.productId.toString() !== productId);
+  
+        cart = await cart.save();
+        return res.status(200).json(cart);
+      } else {
+        return res.status(404).json({ message: 'Cart not found' });
+      }
+    } catch (error) {
+      console.error('Error in /cart/remove:', error.message);
       return res.status(500).json({ message: 'Something went wrong' });
     }
   });

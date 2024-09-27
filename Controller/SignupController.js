@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../Model/Signup');
+const mongoose = require('mongoose');
 
 // Create a new employee
 router.post('/addUser', async (req, res) => {

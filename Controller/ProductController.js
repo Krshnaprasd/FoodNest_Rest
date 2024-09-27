@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const router = express.Router();
 const Product = require('../Model/Product');
 
@@ -19,22 +20,25 @@ router.post('/add', async (req, res) => {
   });
 
  // Fetch products with optional category filter
-router.get('/', async (req, res) => {
+ router.get('/', async (req, res) => {
+  const { categoryId, page = 1, limit = 15 } = req.query;
+  const skip = (page - 1) * limit;
+
+
+
   try {
-      const { categoryId } = req.query; // Get categoryId from query parameters
-      let products;
-      if (categoryId) {
-          // Fetch products filtered by category
-          products = await Product.find({ category: categoryId }).populate('category');
-      } else {
-          // Fetch all products
-          products = await Product.find({}).populate('category');
-      }
-      res.status(200).json(products);
+      // Ensure that categoryId is used in the right way
+      const query = categoryId ? { category: new mongoose.Types.ObjectId(categoryId) } : {};
+      const products = await Product.find(query).skip(skip).limit(Number(limit));
+      const total = await Product.countDocuments(query);
+
+      res.json({ products, total });  // Return products and the total count
   } catch (error) {
-      res.status(500).json({ message: error.message });
+      console.error("Error fetching products:", error); // Log the error for debugging
+      res.status(500).json({ error: 'Something went wrong' });
   }
 });
+
 
 module.exports = router;
   
