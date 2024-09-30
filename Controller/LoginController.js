@@ -6,14 +6,14 @@ const User = require('../Model/Signup');
 // Login route
 router.post('/check', async (req, res) => {
   try {
-    // Find user by username
+  
     const user = await User.findOne({ username: req.body.username });
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // Directly compare the password (no bcrypt)
+    
     if (req.body.password === user.password) {
       res.status(200).json({
         _id: user._id,
