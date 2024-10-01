@@ -25,7 +25,7 @@ router.post('/add', async (req, res) => {
             from: 'krshnaprasdedextech@gmail.com',
             to: email,   // Send to the user
             subject: 'Reservation Confirmation',
-            text: `Dear ${name},\n\nYour reservation for ${guests} guests on ${date} at ${time} is confirmed!\n\nThank you for booking with us.`
+            text: `Dear ${name} !!,\n\nYour reservation for ${guests} guests on ${date} at ${time} is confirmed!\n\nThank you for booking with us.`
         };
 
         transporter.sendMail(mailOptions, (error, info) => {
