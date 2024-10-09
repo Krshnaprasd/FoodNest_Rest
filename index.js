@@ -25,7 +25,7 @@ app.use(express.json());
 app.use(cors(
     {
         origin:'https://food-nest-site.vercel.app',
-        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+       
     }
 ))
 
