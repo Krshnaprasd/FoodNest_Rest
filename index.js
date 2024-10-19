@@ -26,9 +26,7 @@ app.use(express.json());
 
 // CORS configuration
 app.use(cors({
-    origin: process.env.NODE_ENV === 'production' ? 'https://food-nest-site.vercel.app' : 'http://localhost:5174',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true
+    origin: "*"
 }));
 
 // Routes
